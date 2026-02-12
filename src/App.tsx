@@ -342,8 +342,8 @@ export default function App() {
             </h1>
             <p className="title">{TITLE}</p>
             <p className="lead">
-              I build reliable full-stack products — from clean React experiences to scalable backends, cloud
-              infrastructure, and performance tuning for real-world systems.
+              MSCS student at UMass Amherst and software developer with experience in full-stack engineering and cloud platforms. 
+              Passionate about building high-quality products and designing scalable backend systems to solve complex challenges.
             </p>
 
             <div className="heroActions">
@@ -351,7 +351,7 @@ export default function App() {
                 View Projects
               </a>
 
-              <a className="btn" href="/Atharv_Bhale_Resume.pdf" target="_blank" rel="noreferrer">
+              <a className="btn" href="./public/Atharv_Bhale_Resume.pdf" target="_blank" rel="noreferrer">
                 Download Resume
               </a>
 
@@ -381,7 +381,7 @@ export default function App() {
                 animationData={hiAvatar}
                 loop={true}
                 autoplay={true}
-                style={{ width: 500, height: 500 }}
+                style={{ width: 500, height: 480 }}
               /> 
             </div>
         </section>
@@ -468,7 +468,7 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="projects" title="Projects" subtitle="Filter + click a project to open details.">
+        <Section id="projects" title="Projects" >
 
           <div className="projects">
             {projects.map((p) => (
