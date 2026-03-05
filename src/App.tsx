@@ -2,6 +2,15 @@ import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import hiAvatar from "./assets/coding_themed.json"
 import Lottie from "lottie-react"
+import mc1 from "./assets/medi/img1.png"
+import mc2 from "./assets/medi/img2.png"
+import mc3 from "./assets/medi/img3.png"
+import mc4 from "./assets/medi/img4.png"
+import mc5 from "./assets/medi/img5.png"
+
+import t1 from "./assets/travel/im1.png"
+import t2 from "./assets/travel/im2.png"
+
 
 type SkillGroup = { title: string; items: string[] }
 type Experience = {
@@ -17,8 +26,10 @@ type Project = {
   name: string
   subtitle: string
   date: string
+  repo: string
   stack: string[]
   bullets: string[]
+  images?: string[]
 }
 
 const NAME = 'Atharv Bhale'
@@ -87,6 +98,14 @@ const projects: Project[] = [
     name: 'MediConnect',
     subtitle: 'SaaS healthcare platform',
     date: 'Dec 2025',
+    repo:'https://github.com/atharvb13/MediConnect',
+    images: [
+      mc1,
+      mc2,
+      mc3,
+      mc4,
+      mc5
+    ],
     stack: ['React', 'Node.js', 'MongoDB', 'REST APIs', 'Python (ML)', 'FastAPI', 'Redis', 'Cloud Storage/CDN'],
     bullets: [
       'Built appointment scheduling, secure messaging, and medical record sharing workflows.',
@@ -98,6 +117,11 @@ const projects: Project[] = [
     name: 'Travel Memories',
     subtitle: 'Full-stack social platform',
     date: 'Jul 2025',
+    images: [
+      t1,
+      t2
+    ],
+    repo:'https://github.com/atharvb13/Travel-Memories',
     stack: ['React', 'Redux', 'Node.js', 'MongoDB', 'Material UI', 'Google OAuth', 'JWT'],
     bullets: [
       'Created a social platform with predictable state management using Redux.',
@@ -208,6 +232,132 @@ function Modal({
           </button>
         </div>
         <div className="modalBody">{children}</div>
+      </div>
+    </div>
+  )
+}
+
+function ImageCarousel({
+  images = [],
+  intervalMs = 3500,
+}: {
+  images?: string[]
+  intervalMs?: number
+}) {
+  const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const [drag, setDrag] = useState<{ startX: number; dx: number; active: boolean }>({
+    startX: 0,
+    dx: 0,
+    active: false,
+  })
+
+  if (!images || images.length === 0) return null
+
+  const prev = () => setIndex((i) => (i - 1 + images.length) % images.length)
+  const next = () => setIndex((i) => (i + 1) % images.length)
+
+  // Auto-advance
+  useEffect(() => {
+    if (!images || images.length <= 1) return
+    if (paused) return
+    const id = window.setInterval(() => {
+      setIndex((i) => (i + 1) % images.length)
+    }, intervalMs)
+    return () => window.clearInterval(id)
+  }, [images, intervalMs, paused])
+
+  // Keep index valid if images list changes
+  useEffect(() => {
+    if (!images || images.length === 0) return
+    if (index > images.length - 1) setIndex(0)
+  }, [images, index])
+
+  return (
+    <div
+      className="carousel"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowLeft") prev()
+        if (e.key === "ArrowRight") next()
+      }}
+      onPointerDown={(e) => {
+        if (images.length <= 1) return
+        ;(e.currentTarget as HTMLDivElement).setPointerCapture?.(e.pointerId)
+        setPaused(true)
+        setDrag({ startX: e.clientX, dx: 0, active: true })
+      }}
+      onPointerMove={(e) => {
+        if (!drag.active) return
+        setDrag((d) => ({ ...d, dx: e.clientX - d.startX }))
+      }}
+      onPointerUp={() => {
+        if (!drag.active) return
+        const threshold = 48
+        if (drag.dx > threshold) prev()
+        else if (drag.dx < -threshold) next()
+        setDrag({ startX: 0, dx: 0, active: false })
+        setPaused(false)
+      }}
+      onPointerCancel={() => {
+        if (!drag.active) return
+        setDrag({ startX: 0, dx: 0, active: false })
+        setPaused(false)
+      }}
+      tabIndex={0}
+      role="group"
+      aria-label="Project screenshots"
+    >
+      <div className="carouselViewport" aria-hidden="true">
+        <div
+          className={`carouselTrack ${drag.active ? "dragging" : ""}`}
+          style={{
+            transform: `translateX(calc(${-index * 100}% + ${drag.dx}px))`,
+          }}
+        >
+          {images.map((src, i) => (
+            <div className="carouselSlide" key={src + i}>
+              <img
+                src={src}
+                className="carouselImage"
+                alt={`project screenshot ${i + 1}`}
+                draggable={false}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="carouselMeta" aria-hidden="true">
+        <span className="carouselCount">
+          {index + 1} / {images.length}
+        </span>
+      </div>
+
+      {images.length > 1 && (
+        <>
+          <button className="carouselBtn left" type="button" onClick={prev} aria-label="Previous image">
+            <span aria-hidden="true">‹</span>
+          </button>
+          <button className="carouselBtn right" type="button" onClick={next} aria-label="Next image">
+            <span aria-hidden="true">›</span>
+          </button>
+        </>
+      )}
+
+      <div className="carouselDots">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            className={`dot ${i === index ? "active" : ""}`}
+            onClick={() => setIndex(i)}
+            type="button"
+            aria-label={`Go to image ${i + 1}`}
+          />
+        ))}
       </div>
     </div>
   )
@@ -342,7 +492,7 @@ export default function App() {
             </h1>
             <p className="title">{TITLE}</p>
             <p className="lead">
-              MSCS student at UMass Amherst and software developer with experience in full-stack engineering and cloud platforms. 
+              MSCS student at UMass Amherst and software developer with experience in full stack development and cloud platforms. 
               Passionate about building high-quality products and designing scalable backend systems to solve complex challenges.
             </p>
 
@@ -351,7 +501,7 @@ export default function App() {
                 View Projects
               </a>
 
-              <a className="btn" href="./public/Atharv_Bhale_Resume.pdf" target="_blank" rel="noreferrer">
+              <a className="btn" href="https://drive.google.com/file/d/11A7FJXY1DERoqj4frWqNmbPTQTEy3UCy/view?usp=sharing" target="_blank" rel="noreferrer" download>
                 Download Resume
               </a>
 
@@ -381,7 +531,6 @@ export default function App() {
                 animationData={hiAvatar}
                 loop={true}
                 autoplay={true}
-                style={{ width: 500, height: 480 }}
               /> 
             </div>
         </section>
@@ -389,14 +538,18 @@ export default function App() {
         <Section id="about" title="About" subtitle="A quick snapshot of who I am and what I do.">
           <div className="grid2">
             <div className="card">
-              <h3>Full-stack, but systems-minded</h3>
               <p className="muted">
-                I enjoy shipping polished interfaces and also diving deep into backend performance — tuning queries, caching,
-                and building cloud-native workflows that stay reliable under load.
+            With 1 year of experience as a software engineer across startup and enterprise environments, 
+            I’ve contributed to building and shipping production-ready applications end to end. 
+            My work spans the stack, from designing intuitive interfaces to developing backend services and 
+            taking ideas from concept to launch.
               </p>
               <p className="muted">
-                Recently, I worked on distributed systems migration, automated operations with Python, and built subscription
-                & cloud cost optimizations in AWS.
+                Focused on writing clean, maintainable code, collaborating closely with teams, 
+                and taking ownership of features through delivery. Comfortable stepping into 
+                leadership responsibilities, mentoring teammates, and helping drive projects forward when needed.
+                Constantly exploring new tools and approaches to build better, more thoughtful software.
+
               </p>
             </div>
 
@@ -404,10 +557,10 @@ export default function App() {
               <h3>Focus areas</h3>
               <div className="focus">
                 {[
-                  ['Performance', 'Indexing, caching, query tuning, latency reduction'],
-                  ['Cloud', 'S3/CloudFront/Lambda architectures, monitoring & alerting'],
-                  ['Product', 'From MVP to scale: auth, payments, search, multi-role workflows'],
-                  ['ML Services', 'FastAPI microservices for real-time inference'],
+                  ['Product Engineering', 'Auth, payments, subscriptions, search, multi-role systems'],
+                  ['Frontend', 'React, responsive UI, state management, design systems'],
+                  ['Backend', 'API design, microservices, database modeling, integrations'],
+                  ['Cloud & Deployment', 'AWS, serverless workflows, storage, monitoring'],
                 ].map(([k, v]) => (
                   <div className="focusItem" key={k}>
                     <div className="focusKey">{k}</div>
@@ -472,29 +625,29 @@ export default function App() {
 
           <div className="projects">
             {projects.map((p) => (
-              <article
-                className="card project hoverLift clickable"
-                key={p.name}
-                onClick={() => setSelectedProject(p)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => (e.key === 'Enter' ? setSelectedProject(p) : null)}
-              >
-                <div className="projectHead">
-                  <div>
-                    <h3 className="tight">{p.name}</h3>
-                    <div className="muted">{p.subtitle}</div>
-                  </div>
-                  <div className="when">{p.date}</div>
+            <article
+              className="card project hoverLift clickable"
+              key={p.name}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => (e.key === 'Enter' ? setSelectedProject(p) : null)}
+            >
+              <div className="projectHead" onClick={() => setSelectedProject(p)}>
+                <div>
+                  <h3 className="tight">{p.name}</h3>
+                  <div className="muted">{p.subtitle}</div>
                 </div>
+                <div className="when">{p.date}</div>
+              </div>
 
+              {/* SHOW IMAGES ON MAIN CARD */}
+              {p.images && <ImageCarousel images={p.images} />}
 
-
-                <div className="projectActions">
-                  <span className="btn small">Open details →</span>
-                </div>
-              </article>
-            ))}
+              <div className="projectActions" onClick={() => setSelectedProject(p)}>
+                <span className="btn small">Open details →</span>
+              </div>
+            </article>
+          ))}
           </div>
         </Section>
 
@@ -540,7 +693,7 @@ export default function App() {
             <div className="card">
               <h3>Quick pitch</h3>
               <p className="muted">
-                Full-stack developer with proven impact in <b>performance optimization</b>, <b>AWS cost reduction</b>, and
+                MSCS student with experience in Full stack development and cloud technologies, with proven impact in building and
                 <b> shipping features that drive growth</b>.
               </p>
 
@@ -573,10 +726,6 @@ export default function App() {
         >
           {selectedProject ? (
             <>
-              <div className="modalMeta">
-                <span className="pill">{selectedProject.date}</span>
-                <span className="pill">Click outside / Esc to close</span>
-              </div>
               <div className="chips" style={{ marginTop: 10 }}>
                 {selectedProject.stack.map((s) => (
                   <span key={s} className="chipStatic">
@@ -591,8 +740,8 @@ export default function App() {
               </ul>
 
               <div className="modalActions">
-                <a className="btn small" href="#contact" onClick={() => setSelectedProject(null)}>
-                  Request demo / details
+                <a className="btn small" href={selectedProject?.repo} onClick={() => setSelectedProject(null)}>
+                  Link 
                 </a>
                 <button className="btn small ghost" type="button" onClick={() => setSelectedProject(null)}>
                   Close

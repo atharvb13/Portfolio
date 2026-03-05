@@ -5,7 +5,7 @@
   --panel2: rgba(255,255,255,.08);
   --stroke: rgba(255,255,255,.12);
   --text: rgba(255,255,255,.92);
-  --muted: rgba(255,255,255,.70);
+  --muted: rgba(255, 255, 255, 0.78);
   --muted2: rgba(255,255,255,.55);
   --accent: #9B7BFF;
   --accent2: #2EE59D;
@@ -13,6 +13,29 @@
   --radius: 18px;
   --radius2: 26px;
 }
+
+.hero > * { min-width: 0; }
+.heroActions .btn{
+  max-width: 100%;
+}
+@media (max-width: 760px){
+  .heroActions{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .heroActions .btn{
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px){
+  .heroActions{
+    grid-template-columns: 1fr;
+  }
+}
+
+.lead, .title, h1 { overflow-wrap: anywhere; }
 
 *{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
@@ -24,6 +47,187 @@ body{ color: var(--text); }
   overflow-x: clip;
 }
 
+/* Carousel */
+.carousel{
+  position: relative;
+  width: 100%;
+  margin-top: 14px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  outline: none;
+  isolation: isolate;
+  touch-action: pan-y; /* allow vertical scroll while enabling horizontal swipe */
+}
+
+.carousel:focus{
+  box-shadow: 0 18px 50px rgba(0,0,0,.35), 0 0 0 3px rgba(130, 110, 255, .22);
+  border-color: rgba(255,255,255,.18);
+}
+
+/* Side fades (makes arrows look premium) */
+.carousel::before,
+.carousel::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 92px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .18s ease;
+  z-index: 2;
+}
+.carousel::before{
+  left: 0;
+  background: linear-gradient(to right, rgba(5,6,10,.65), transparent);
+}
+.carousel::after{
+  right: 0;
+  background: linear-gradient(to left, rgba(5,6,10,.65), transparent);
+}
+.carousel:hover::before,
+.carousel:hover::after{
+  opacity: 1;
+}
+
+/* Use an aspect-ratio viewport so the carousel scales nicely on all screens */
+.carouselViewport{ width: 100%; overflow: hidden; aspect-ratio: 16 / 9; }
+
+.carouselTrack{
+  display: flex;
+  will-change: transform;
+  transition: transform .45s cubic-bezier(.2,.9,.2,1);
+  height: 100%;
+}
+
+.carouselTrack.dragging{
+  transition: none;
+  cursor: grabbing;
+}
+
+
+.carouselSlide{
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.06);  /* nice â€œframeâ€ behind screenshots */
+  height: 100%;
+}
+
+.carouselImage{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;    /* âœ… no cropping */
+  padding: clamp(6px, 2vw, 12px);
+  box-sizing: border-box;
+  user-select: none;
+}
+
+/* Arrows overlay (only visible on hover/focus) */
+.carouselBtn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(27, 29, 36, 0.329);
+  backdrop-filter: blur(8px);
+  color: rgba(255,255,255,.92);
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform .16s ease, background .16s ease, border-color .16s ease;
+  z-index: 3;
+  opacity: 0;
+}
+.carousel:hover .carouselBtn,
+.carousel:focus-within .carouselBtn{
+  opacity: 1;
+}
+.carouselBtn:hover{
+  background: rgba(10,12,20,.70);
+  border-color: rgba(255,255,255,.28);
+  transform: translateY(-50%) scale(1.04);
+}
+.carouselBtn.left{ left: 12px; }
+.carouselBtn.right{ right: 12px; }
+
+/* Top-right counter badge */
+.carouselMeta{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 3;
+}
+.carouselCount{
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(10,12,20,.45);
+  border: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(10px);
+  color: rgba(255,255,255,.88);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+/* Dots */
+.carouselDots{
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 7px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(10,12,20,.45);
+  border: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(8px);
+  z-index: 3;
+}
+.dot{
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.30);
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  transition: transform .14s ease, background .14s ease;
+}
+.dot:hover{ transform: scale(1.25); }
+.dot.active{
+  background: rgba(255,255,255,.88);
+  transform: scale(1.15);
+}
+
+@media (max-width: 680px){
+  .carouselViewport{ aspect-ratio: 4 / 3; }
+  .carouselBtn{ width: 40px; height: 40px; font-size: 26px; }
+  .carousel::before, .carousel::after{ width: 70px; }
+}
+
+/* On touch devices there's no hoverâ€”keep controls available */
+@media (hover: none) and (pointer: coarse){
+  .carouselBtn{ opacity: 1; }
+  .carousel::before, .carousel::after{ opacity: .9; }
+  .carouselDots{ bottom: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .carouselTrack{ transition: none; }
+}
 .container{
   width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
@@ -286,6 +490,8 @@ h1{
   display: grid;
   gap: 20px;
   align-content: start;
+  height:500px;
+  width:480px;
 }
 
 .profile{ padding: 18px; }
@@ -625,9 +831,22 @@ h1{
 @media (max-width: 680px){
   .nav{ display: none; }
   .container{ width: min(1120px, calc(100% - 28px)); }
+  .heroRight{ display: none; }
   .grid2{ grid-template-columns: 1fr; }
   .mini{ grid-template-columns: 1fr; }
   .skills{ grid-template-columns: 1fr; }
   .profileStats{ grid-template-columns: 1fr; }
   .footer{ flex-direction: column; align-items: flex-start; }
+
+  /* Projects: stack header + make CTA easier to tap */
+  .projectHead{ flex-direction: column; align-items: flex-start; gap: 8px; }
+  .when{ padding: 7px 10px; }
+  .projectActions .btn{ width: 100%; }
+}
+
+@media (max-width: 420px){
+  .container{ width: min(1120px, calc(100% - 22px)); }
+  .carouselBtn.left{ left: 8px; }
+  .carouselBtn.right{ right: 8px; }
+  .carouselDots{ gap: 6px; padding: 7px 9px; }
 }
