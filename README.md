@@ -2,6 +2,8 @@
 
 A responsive React + TypeScript portfolio built with Vite. Content follows the supplied new-grad SWE resume, including AWS Aurora, TCS, Champhunt, MediConnect, RiskWise, education, and leadership.
 
+The narrative highlights engineering depth, product ownership, and collaborative delivery for software engineering, technical product management, and forward-deployed engineering opportunities. Role titles and metrics remain grounded in the resume; target roles are presented as interests.
+
 ## Run locally
 
 ```sh

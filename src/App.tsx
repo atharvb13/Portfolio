@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Icon } from './components/Icons'
 import { MediConnectVisual, RiskWiseVisual } from './components/ProjectVisuals'
-import { education, experiences, navigation, profile, projects, skillGroups } from './data/portfolio'
+import { capabilities, deliverySkills, education, experiences, navigation, profile, projects, skillGroups } from './data/portfolio'
 import type { Project } from './data/portfolio'
 import mc1 from './assets/medi/img1.png'
 import mc2 from './assets/medi/img2.png'
@@ -50,6 +50,10 @@ function ProjectDetails({ project }: { project: Project }) {
     <p className="eyebrow">{project.category} <span>/ {project.date}</span></p>
     <h2 id="project-dialog-title">{project.name}</h2>
     <p className="dialog-summary">{project.summary}</p>
+    <dl className="project-brief">
+      <div><dt className="eyebrow">THE PROBLEM</dt><dd>{project.problem}</dd></div>
+      <div><dt className="eyebrow">WHAT I DELIVERED</dt><dd>{project.delivered}</dd></div>
+    </dl>
     {project.id === 'riskwise' ? <RiskWiseVisual /> : <MediConnectVisual />}
     <div className="project-detail-grid">{project.details.map(detail => <div key={detail.title}><h3>{detail.title}</h3><p>{detail.text}</p></div>)}</div>
     <Stack items={project.stack} />
@@ -133,21 +137,31 @@ export default function App() {
       <main id="main">
         <section className="hero page-width" id="home" data-section>
           <div className="hero-content">
-            <p className="eyebrow"><span className="tiny-cross">✳</span> SOFTWARE ENGINEER & CURIOUS BUILDER</p>
+            <p className="eyebrow"><span className="tiny-cross">✳</span> ENGINEERING · PRODUCT · DELIVERY</p>
             <h1>Good software.<br />Real-world <em>impact.</em></h1>
-            <p className="hero-intro">I’m Atharv. I build across the stack, from the interfaces people use to the systems that make them work.</p>
-            <p className="hero-context">Currently building on the <strong>AWS Aurora team.</strong><br />M.S. Computer Science at <strong>UMass Amherst.</strong></p>
+            <p className="hero-intro">I’m Atharv. I turn complex problems into working products, connecting engineering depth, product thinking, and hands-on delivery.</p>
+            <p className="hero-context">Currently an <strong>SDE intern on the AWS Aurora team.</strong><br />M.S. Computer Science at <strong>UMass Amherst.</strong></p>
             <div className="hero-actions"><a className="button button-dark" href="#work">Explore my work <Icon name="arrow" size={18} /></a><a className="text-link resume-download" href={profile.resume} download="Atharv_Bhale_Resume.pdf">Download résumé <Icon name="download" size={17} /></a></div>
             <div className="hero-socials"><a href={profile.github} target="_blank" rel="noreferrer"><Icon name="github" size={17} /> GitHub <Icon name="arrow-up" size={12} /></a><a href={profile.linkedin} target="_blank" rel="noreferrer"><Icon name="linkedin" size={17} /> LinkedIn <Icon name="arrow-up" size={12} /></a><a href={`mailto:${profile.email}`} aria-label={`Email ${profile.email}`}><Icon name="mail" size={18} /> Say hello <Icon name="arrow-up" size={12} /></a></div>
           </div>
           <SystemIllustration />
-          <div className="hero-footnote"><span className="mono">FULL-STACK THINKING. END-TO-END OWNERSHIP.</span><a href="#work" className="mono">SCROLL TO EXPLORE <span>↓</span></a></div>
+          <div className="hero-footnote"><span className="mono">ENGINEERING DEPTH. PRODUCT PERSPECTIVE. END-TO-END OWNERSHIP.</span><a href="#work" className="mono">SCROLL TO EXPLORE <span>↓</span></a></div>
         </section>
 
         <div className="impact-strip"><div className="impact-inner page-width"><p>Small details.<br /><strong>Measurable difference.</strong></p><div className="impact-stat"><strong>50<span>%</span></strong><span>less manual effort at TCS</span></div><div className="impact-stat"><strong>2<span>×</span></strong><span>recurring revenue at Champhunt</span></div><div className="impact-stat"><strong>25<span>%</span></strong><span>lower infrastructure costs at Champhunt</span></div></div></div>
 
+        <section className="capabilities-section page-width" aria-labelledby="capabilities-title">
+          <div className="capabilities-heading"><p className="eyebrow">HOW I CONTRIBUTE</p><h2 id="capabilities-title">From the problem to the product.</h2></div>
+          <div className="capabilities-grid">{capabilities.map((capability, index) => <article key={capability.title}>
+            <span className="mono capability-index">0{index + 1}</span>
+            <h3>{capability.title}</h3>
+            <p>{capability.description}</p>
+            <p className="capability-evidence">{capability.evidence}</p>
+          </article>)}</div>
+        </section>
+
         <section id="work" className="work-section section page-width" data-section>
-          <SectionHeading number="01" label="SELECTED WORK" title="Ideas, engineered."><p>Useful products. Thoughtful systems.<br />A few things I’ve built from the ground up.</p></SectionHeading>
+          <SectionHeading number="01" label="SELECTED WORK" title="Problems into products."><p>Operational context. Technical depth.<br />Working solutions, from interface to infrastructure.</p></SectionHeading>
           <div className="project-grid">{projects.map(project => <article className="project-card" key={project.id}>
             <button className="project-visual-button" onClick={() => setSelectedProject(project)} aria-label={`Explore ${project.name} project details`}>{project.id === 'riskwise' ? <RiskWiseVisual /> : <MediConnectVisual />}<span className="visual-open"><Icon name="arrow-up" size={19} /></span></button>
             <div className="project-meta mono"><span>{project.number} / {project.category}</span><span>{project.date}</span></div>
@@ -158,7 +172,7 @@ export default function App() {
         </section>
 
         <section id="experience" className="experience-section section" data-section><div className="page-width">
-          <SectionHeading number="02" label="THE JOURNEY" title="Built in the real world."><p>From fast-moving products<br />to cloud infrastructure at scale.</p></SectionHeading>
+          <SectionHeading number="02" label="THE JOURNEY" title="Ownership, in practice."><p>Shipping features. Aligning teams.<br />Connecting technical decisions to real outcomes.</p></SectionHeading>
           <div className="experience-list">{experiences.map(experience => <article className={`experience-row ${experience.current ? 'current-role' : ''}`} key={experience.role + experience.company}>
             <div className="experience-company"><span className={`company-mark ${experience.initials}`}>{experience.initials}</span><div><h3>{experience.company}</h3><p>{experience.location}</p>{experience.current && <span className="current-label mono"><span className="signal-dot" />CURRENTLY HERE</span>}</div></div>
             <div className="experience-main"><div className="experience-role"><h4>{experience.role}</h4><span className="mono">{experience.period}</span></div>{experience.team && <p className="team-label">{experience.team}</p>}<ul className="experience-bullets">{experience.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul><Stack items={experience.stack} /></div>
@@ -167,12 +181,13 @@ export default function App() {
 
         <section id="about" className="about-section section page-width" data-section>
           <SectionHeading number="03" label="A LITTLE MORE HUMAN" title="Curiosity is the throughline." />
-          <div className="about-grid"><div className="about-story"><p className="about-lead">I like understanding how things work.<br /><em>Then making them work better.</em></p><p>My work spans startup product engineering, enterprise systems, and now cloud infrastructure at AWS. I enjoy the space where a good user experience meets a well-designed backend.</p><p>At UMass Amherst, I’m deepening that foundation through distributed systems, software engineering, and machine learning. Outside the code, I represent 500+ CS graduate students as a Graduate Student Government Senator.</p><div className="award-note"><span className="award-symbol" aria-hidden="true">✳</span><div><span className="eyebrow">BUILDING UNDER PRESSURE</span><h3>Manus AI Hackathon winner</h3><p>Boston Tech Week 2026. A working AI product, built and shipped in under 24 hours.</p></div></div></div>
+          <div className="about-grid"><div className="about-story"><p className="about-lead">Understand the problem.<br /><em>Own the path to a solution.</em></p><p>My work spans startup product engineering, enterprise systems, and cloud infrastructure at AWS. I’ve built production features, worked with design and QA, incorporated service-owner feedback, and mentored teammates through delivery.</p><p>I’m interested in software engineering, technical product management, and forward-deployed engineering roles where I can combine technical depth with product judgment, collaboration, and hands-on execution.</p><p>At UMass Amherst, I study distributed systems, software engineering, and machine learning. As a Graduate Student Government Senator, I also represent 500+ CS graduate students in university policy discussions.</p><div className="award-note"><span className="award-symbol" aria-hidden="true">✳</span><div><span className="eyebrow">BUILDING UNDER PRESSURE</span><h3>Manus AI Hackathon winner</h3><p>Boston Tech Week 2026. A working AI product, built and shipped in under 24 hours.</p></div></div></div>
             <div className="education-list"><p className="eyebrow">ALWAYS LEARNING</p>{education.map(item => <article className="education-item" key={item.school}><div className="education-top"><span className="mono">{item.period}</span><span className="gpa">GPA {item.gpa}</span></div><h3>{item.school}</h3><p className="degree">{item.degree}</p>{item.detail && <p className="coursework">{item.detail}</p>}</article>)}</div></div>
           <div className="toolkit"><div className="toolkit-heading"><h3>The toolkit</h3><span className="mono">PICKING THE RIGHT TOOL FOR THE PROBLEM.</span></div><div className="skills-grid">{skillGroups.map((group, index) => <div className="skill-group" key={group.title}><span className="skill-index mono">0{index + 1}</span><h4>{group.title}</h4><Stack items={group.items} /></div>)}</div></div>
+          <div className="delivery-toolkit"><h3>Product & team delivery</h3><p>Practices I’ve applied across technical design, feature delivery, mentoring, and stakeholder collaboration.</p><Stack items={deliverySkills} /></div>
         </section>
 
-        <section id="contact" className="contact-section" data-section><div className="page-width"><div className="contact-top"><p className="eyebrow"><span>04 /</span> NEXT CONVERSATION</p><span className="mono">LET’S BUILD SOMETHING THAT MATTERS.</span></div><div className="contact-main"><div><h2>Good things start<br />with <em>a hello.</em></h2><p>Have a role, an idea, or an interesting problem?<br />I’d love to hear about it.</p></div><a className="contact-arrow" href={`mailto:${profile.email}`} aria-label="Start a conversation by email"><Icon name="arrow-up" size={52} /></a></div><div className="contact-bottom"><div className="email-row"><a href={`mailto:${profile.email}`}>{profile.email}</a><button className="icon-button copy-button" onClick={copyEmail} aria-label="Copy email address"><Icon name={copyStatus === 'Email address copied' ? 'check' : 'copy'} size={18} /></button></div><div className="contact-links"><a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn <Icon name="arrow-up" size={15} /></a><a href={profile.github} target="_blank" rel="noreferrer">GitHub <Icon name="arrow-up" size={15} /></a><a href={`tel:${profile.phone}`}>{profile.phoneLabel} <Icon name="arrow-up" size={15} /></a></div></div></div></section>
+        <section id="contact" className="contact-section" data-section><div className="page-width"><div className="contact-top"><p className="eyebrow"><span>04 /</span> NEXT CONVERSATION</p><span className="mono">LET’S BUILD SOMETHING THAT MATTERS.</span></div><div className="contact-main"><div><h2>Good things start<br />with <em>a hello.</em></h2><p>Hiring for software engineering, technical product, or FDE roles?<br />Let’s talk about the problems your team is solving.</p></div><a className="contact-arrow" href={`mailto:${profile.email}`} aria-label="Start a conversation by email"><Icon name="arrow-up" size={52} /></a></div><div className="contact-bottom"><div className="email-row"><a href={`mailto:${profile.email}`}>{profile.email}</a><button className="icon-button copy-button" onClick={copyEmail} aria-label="Copy email address"><Icon name={copyStatus === 'Email address copied' ? 'check' : 'copy'} size={18} /></button></div><div className="contact-links"><a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn <Icon name="arrow-up" size={15} /></a><a href={profile.github} target="_blank" rel="noreferrer">GitHub <Icon name="arrow-up" size={15} /></a><a href={`tel:${profile.phone}`}>{profile.phoneLabel} <Icon name="arrow-up" size={15} /></a></div></div></div></section>
       </main>
 
       <footer className="site-footer page-width"><a className="footer-signature" href="#home">Atharv Bhale<span>© {new Date().getFullYear()}</span></a><span className="mono footer-note">THOUGHTFULLY BUILT. ALWAYS ITERATING.</span><a href="#home" className="text-link">Back to top <span aria-hidden="true">↑</span></a></footer>
