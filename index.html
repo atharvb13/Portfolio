@@ -5,14 +5,24 @@
     <link rel="icon" type="image/svg+xml" href="/Portfolio/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#faf9f6" />
+    <script>
+      (() => {
+        let saved;
+        try { saved = localStorage.getItem('portfolio-theme'); } catch {}
+        const theme = saved === 'light' || saved === 'dark' ? saved
+          : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#151d18' : '#faf9f6';
+      })();
+    </script>
     <meta name="description" content="Atharv Bhale — AWS Aurora SDE intern and UMass Amherst MSCS student combining software engineering, product ownership, and collaborative delivery. Explore cloud systems, full-stack products, and applied AI." />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Atharv Bhale — Engineering, Product & Delivery" />
     <meta property="og:description" content="Engineering depth. Product perspective. End-to-end ownership. Explore cloud systems, full-stack products, and applied AI." />
     <meta property="og:url" content="https://atharvb13.github.io/Portfolio/" />
     <title>Atharv Bhale — Engineering, Product & Delivery</title>
-    <script type="module" crossorigin src="/Portfolio/assets/index-DYDDlEia.js"></script>
-    <link rel="stylesheet" crossorigin href="/Portfolio/assets/index-CIRnyIor.css">
+    <script type="module" crossorigin src="/Portfolio/assets/index-Dcl32_RF.js"></script>
+    <link rel="stylesheet" crossorigin href="/Portfolio/assets/index-BzfZCmmB.css">
   </head>
   <body>
     <div id="root"></div>
