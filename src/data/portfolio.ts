@@ -1,8 +1,6 @@
 export const profile = {
   name: 'Atharv Bhale',
   email: 'atharvb.0013@gmail.com',
-  phone: '+14134094535',
-  phoneLabel: '(413) 409-4535',
   github: 'https://github.com/atharvb13',
   linkedin: 'https://www.linkedin.com/in/atharv-b-624891212/',
   resume: `${import.meta.env.BASE_URL}Atharv_Bhale_Resume.pdf`,
