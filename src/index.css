@@ -2,35 +2,99 @@
 
 :root {
   font-family: 'DM Sans', sans-serif;
-  color: #29332c;
-  background: #faf9f6;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --paper: #faf9f6;
   --ink: #29332c;
-  --muted: #697068;
-  --line: #dddfd6;
-  --accent: #b9512e;
+  --muted: #626d5d;
+  --line: #d6dccf;
+  --accent: #aa4827;
+  --panel: #eef0e7;
+  --elevated: #fcfcf8;
+  --chip: #e8edde;
+  --green: #465e3d;
+  --green-fill: #344b36;
+  --on-green: #f3f5e9;
+  --on-green-muted: #cad6bd;
+  --header: #faf9f6f2;
+  --shadow: #29332c14;
+  --grid-line: #d4ddc9;
+  --risk-bg: #e9ede3;
+  --map-dot: #c1ccb7;
+  --map-land: #d3ddc9;
+  --map-border: #bdcbb1;
+  --route: #536b50;
+  --warm-bg: #f0ebe4;
+  --warm-node: #fbf8f1;
+  --warm-ink: #65513f;
+  --warm-muted: #756048;
+  --warm-line: #c5af96;
+  --warm-chip: #e5d8c6;
+  --warm-accent: #ad633c;
+  --contact-bg: #293e2e;
+  --contact-line: #667b5f;
+  --contact-ink: #f0f0df;
+  --contact-muted: #c4ceb9;
+  --contact-accent: #e4bc93;
   --serif: 'Libre Caslon Display', Georgia, serif;
   --mono: 'IBM Plex Mono', monospace;
 }
 
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #151d18;
+  --ink: #edf0e7;
+  --muted: #b0bdab;
+  --line: #3d4c3e;
+  --accent: #f0ab86;
+  --panel: #1e2921;
+  --elevated: #263329;
+  --chip: #2d3d2d;
+  --green: #c0d4ae;
+  --green-fill: #36533b;
+  --on-green: #f3f5e9;
+  --on-green-muted: #d1dec6;
+  --header: #151d18f2;
+  --shadow: #00000030;
+  --grid-line: #364736;
+  --risk-bg: #202e24;
+  --map-dot: #4c6449;
+  --map-land: #3b5239;
+  --map-border: #607b55;
+  --route: #b3d08f;
+  --warm-bg: #2d2722;
+  --warm-node: #3a3129;
+  --warm-ink: #f0d8bd;
+  --warm-muted: #d4bfa5;
+  --warm-line: #826a50;
+  --warm-chip: #51412f;
+  --warm-accent: #f0b38c;
+  --contact-bg: #1c3022;
+  --contact-line: #53694c;
+  --contact-ink: #f0f0df;
+  --contact-muted: #c6d3bc;
+  --contact-accent: #efc39a;
+}
+
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+html { scroll-behavior: smooth; scroll-padding-top: 105px; }
 body { margin: 0; min-width: 320px; }
 button, a, input { -webkit-tap-highlight-color: transparent; }
-button { font: inherit; color: inherit; cursor: pointer; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
 a { color: inherit; text-decoration: none; }
 button, a { touch-action: manipulation; }
-button { border: 0; background: none; }
-button:disabled { cursor: default; }
 svg { flex-shrink: 0; vertical-align: middle; }
 img { display: block; max-width: 100%; }
 h1, h2, h3, h4, p { margin: 0; }
-::selection { background: #e9c6ae; color: #29332c; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 2px; }
+::selection { background: var(--accent); color: var(--paper); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 3px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }

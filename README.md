@@ -28,6 +28,8 @@ After reviewing the production build, `npm run deploy` publishes `dist` to the r
 - `src/App.tsx` contains page sections, project dialogs, and screenshot navigation.
 - `src/components/ProjectVisuals.tsx` contains illustrative system diagrams, rather than live project dashboards.
 - `src/App.css` and `src/index.css` define the responsive design, typography, and reduced-motion support.
+- `src/components/ThemeToggle.tsx` provides light/dark mode, follows the system preference until a visitor chooses a theme, and remembers the choice in local storage. The head script in `index.html` applies the theme before the first paint.
+- Main copy uses 16–18px text; supporting labels and diagrams stay at 12px or larger. Diagram layouts adapt on phones instead of shrinking their text.
 - `public/Atharv_Bhale_Resume.pdf` is the downloadable resume. Replace it with the same filename when updating.
 - `src/assets/medi/` contains the existing MediConnect screenshots.
 

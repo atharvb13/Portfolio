@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Icon } from './components/Icons'
+import { ThemeToggle } from './components/ThemeToggle'
 import { MediConnectVisual, RiskWiseVisual } from './components/ProjectVisuals'
 import { capabilities, deliverySkills, education, experiences, navigation, profile, projects, skillGroups } from './data/portfolio'
 import type { Project } from './data/portfolio'
@@ -130,7 +131,7 @@ export default function App() {
           <nav className={`navigation ${menuOpen ? 'is-open' : ''}`} id="main-navigation" aria-label="Main navigation">
             {navigation.map(item => <a href={`#${item.id}`} key={item.id} className={activeSection === item.id ? 'active' : ''} aria-current={activeSection === item.id ? 'location' : undefined} onClick={() => setMenuOpen(false)}>{item.label}</a>)}
           </nav>
-          <div className="header-actions"><a className="header-resume" href={profile.resume} target="_blank" rel="noreferrer">Résumé <Icon name="arrow-up" size={15} /></a><button ref={menuToggleRef} className="menu-toggle icon-button" aria-controls="main-navigation" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} onClick={() => setMenuOpen(!menuOpen)}><Icon name={menuOpen ? 'close' : 'menu'} /></button></div>
+          <div className="header-actions"><ThemeToggle /><a className="header-resume" href={profile.resume} target="_blank" rel="noreferrer">Résumé <Icon name="arrow-up" size={15} /></a><button ref={menuToggleRef} className="menu-toggle icon-button" aria-controls="main-navigation" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} onClick={() => setMenuOpen(!menuOpen)}><Icon name={menuOpen ? 'close' : 'menu'} /></button></div>
         </div>
       </header>
 

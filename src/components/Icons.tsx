@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react'
 
-type IconProps = { name: 'arrow' | 'arrow-up' | 'download' | 'github' | 'linkedin' | 'mail' | 'copy' | 'check' | 'menu' | 'close' | 'code' | 'layers' | 'database' | 'plus'; size?: number; style?: CSSProperties }
+type IconProps = { name: 'arrow' | 'arrow-up' | 'download' | 'github' | 'linkedin' | 'mail' | 'copy' | 'check' | 'menu' | 'close' | 'code' | 'layers' | 'database' | 'plus' | 'sun' | 'moon'; size?: number; style?: CSSProperties }
 
 export function Icon({ name, size = 20, style }: IconProps) {
   const paths: Record<IconProps['name'], ReactNode> = {
@@ -18,6 +18,8 @@ export function Icon({ name, size = 20, style }: IconProps) {
     layers: <path d="m12 3 10 6-10 6L2 9l10-6Zm-10 12 10 6 10-6M2 12l10 6 10-6" />,
     database: <><ellipse cx="12" cy="5" rx="8" ry="3" /><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0" /></>,
     plus: <path d="M12 4v16M4 12h16" />,
+    sun: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" /></>,
+    moon: <path d="M20.5 13.5A9 9 0 0 1 10.5 3a9 9 0 1 0 10 10.5Z" />,
   }
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={style}>{paths[name]}</svg>
 }
