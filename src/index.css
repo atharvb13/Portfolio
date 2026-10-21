@@ -1,26 +1,37 @@
-/* index.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700;750;800&family=IBM+Plex+Mono:wght@400;450;500&family=Libre+Caslon+Display&display=swap');
 
 :root {
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: dark;
+  font-family: 'DM Sans', sans-serif;
+  color: #29332c;
+  background: #faf9f6;
+  font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --paper: #faf9f6;
+  --ink: #29332c;
+  --muted: #697068;
+  --line: #dddfd6;
+  --accent: #b9512e;
+  --serif: 'Libre Caslon Display', Georgia, serif;
+  --mono: 'IBM Plex Mono', monospace;
 }
 
-html, body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  background: #05060b;
-}
-
-a { color: inherit; }
-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+body { margin: 0; min-width: 320px; }
+button, a, input { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+button, a { touch-action: manipulation; }
+button { border: 0; background: none; }
+button:disabled { cursor: default; }
+svg { flex-shrink: 0; vertical-align: middle; }
+img { display: block; max-width: 100%; }
+h1, h2, h3, h4, p { margin: 0; }
+::selection { background: #e9c6ae; color: #29332c; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
