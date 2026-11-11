@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Icon } from './components/Icons'
 import { ThemeToggle } from './components/ThemeToggle'
+import { RiskWiseGallery } from './components/RiskWiseGallery'
+import { riskwiseCoverScreenshot, riskwiseScreenshots } from './data/riskwiseScreenshots'
 import { MediConnectGallery } from './components/MediConnectGallery'
 import { MediConnectVisual, RiskWiseVisual } from './components/ProjectVisuals'
 import { mediCoverScreenshot, mediScreenshots } from './data/mediconnectScreenshots'
@@ -43,10 +45,10 @@ function ProjectDetails({ project }: { project: Project }) {
       <div><dt className="eyebrow">THE PROBLEM</dt><dd>{project.problem}</dd></div>
       <div><dt className="eyebrow">WHAT I DELIVERED</dt><dd>{project.delivered}</dd></div>
     </dl>
-    {project.id === 'riskwise' ? <RiskWiseVisual /> : <MediConnectGallery />}
+    {project.id === 'riskwise' ? <RiskWiseGallery /> : <MediConnectGallery />}
     <div className="project-detail-grid">{project.details.map(detail => <div key={detail.title}><h3>{detail.title}</h3><p>{detail.text}</p></div>)}</div>
     <Stack items={project.stack} />
-    {project.id === 'mediconnect' && <details className="project-architecture"><summary>Explore the system architecture</summary><MediConnectVisual /></details>}
+    <details className="project-architecture"><summary>Explore the system architecture</summary>{project.id === 'riskwise' ? <RiskWiseVisual /> : <MediConnectVisual />}</details>
     <a className="button button-dark" href={project.repo} target="_blank" rel="noreferrer"><Icon name="github" size={18} /> Explore the source <Icon name="arrow-up" size={17} /></a>
   </>
 }
@@ -148,7 +150,7 @@ export default function App() {
         <section id="work" className="work-section section page-width" data-section>
           <SectionHeading number="01" label="SELECTED WORK" title="Problems into products."><p>Operational context. Technical depth.<br />Working solutions, from interface to infrastructure.</p></SectionHeading>
           <div className="project-grid">{projects.map(project => <article className="project-card" key={project.id}>
-            <button className="project-visual-button" onClick={() => setSelectedProject(project)} aria-label={`Explore ${project.name} project details`}>{project.id === 'riskwise' ? <RiskWiseVisual /> : <div className="project-screenshot-preview"><img src={mediCoverScreenshot.src} alt={mediCoverScreenshot.alt} width="1440" height="1000" loading="lazy" /><div className="project-screenshot-caption"><span className="mono">THE RUNNING APPLICATION</span><span>{mediScreenshots.length} screenshots <Icon name="arrow-up" size={16} /></span></div></div>}{project.id === 'riskwise' && <span className="visual-open"><Icon name="arrow-up" size={19} /></span>}</button>
+            <button className="project-visual-button" onClick={() => setSelectedProject(project)} aria-label={`Explore ${project.name} project details`}><div className="project-screenshot-preview"><img src={(project.id === 'riskwise' ? riskwiseCoverScreenshot : mediCoverScreenshot).src} alt={(project.id === 'riskwise' ? riskwiseCoverScreenshot : mediCoverScreenshot).alt} width="1440" height="1000" loading="lazy" /><div className="project-screenshot-caption"><span className="mono">THE RUNNING APPLICATION</span><span>{project.id === 'riskwise' ? riskwiseScreenshots.length : mediScreenshots.length} screenshots <Icon name="arrow-up" size={16} /></span></div></div></button>
             <div className="project-meta mono"><span>{project.number} / {project.category}</span><span>{project.date}</span></div>
             <div className="project-title-row"><h3><button onClick={() => setSelectedProject(project)}>{project.name}</button></h3><a href={project.repo} target="_blank" rel="noreferrer" aria-label={`${project.name} source on GitHub`}><Icon name="github" size={21} /></a></div>
             <p className="project-tagline">{project.description}</p><p className="project-summary">{project.summary}</p><Stack items={project.stack} /><button className="text-link project-details-link" onClick={() => setSelectedProject(project)}>Explore project <Icon name="arrow" size={17} /></button>

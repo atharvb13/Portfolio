@@ -263,10 +263,10 @@
 .toast.visible { opacity: 1; transform: translate(-50%, 0); }
 
 /* Real application captures, with workflow filters and full-size originals. */
-.medi-gallery { border-top: 1px solid var(--line); padding-top: 25px; margin-top: 28px; }
-.medi-gallery .gallery-heading { align-items: end; flex-wrap: wrap; }
-.medi-gallery .gallery-heading h3 { font-size: 25px; font-weight: 500; letter-spacing: -.03em; margin-top: 7px; }
-.medi-gallery .gallery-heading > .mono { color: var(--muted); }
+.application-gallery { border-top: 1px solid var(--line); padding-top: 25px; margin-top: 28px; }
+.application-gallery .gallery-heading { align-items: end; flex-wrap: wrap; }
+.application-gallery .gallery-heading h3 { font-size: 25px; font-weight: 500; letter-spacing: -.03em; margin-top: 7px; }
+.application-gallery .gallery-heading > .mono { color: var(--muted); }
 .gallery-demo-note { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 18px; }
 .gallery-filters { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
 .gallery-filters button { min-height: 42px; padding: 8px 13px; border: 1px solid var(--line); border-radius: 3px; font-size: 14px; background: var(--panel); }
@@ -280,7 +280,7 @@
 .gallery-figure figcaption { padding-top: 16px; }
 .gallery-figure figcaption strong { font-size: 18px; font-weight: 550; }
 .gallery-figure figcaption p { color: var(--muted); font-size: 15px; line-height: 1.85; margin-top: 7px; }
-.medi-gallery .gallery-controls { border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-top: 4px; }
+.application-gallery .gallery-controls { border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-top: 4px; }
 .gallery-thumbnails { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
 .gallery-thumbnails button { text-align: left; padding: 0; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: var(--panel); }
 .gallery-thumbnails button[aria-pressed='true'] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
@@ -455,3 +455,7 @@
   .hero-socials { gap: 12px; }
   .contact-main h2 { font-size: 42px; }
 }
+
+.dark-screenshots .gallery-full-image, .dark-screenshots .gallery-thumbnails img { background: #09131e; }
+
+.gallery-full-image > img.gallery-portrait { height: min(75dvh, 844px); aspect-ratio: auto; }
